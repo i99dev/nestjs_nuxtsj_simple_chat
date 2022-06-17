@@ -3,11 +3,6 @@ import { UserService } from './user.service';
 import { User } from './user.entity';
 import { GetUser } from '../auth/get-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiOkResponse,
-  ApiResponse,
-  ApiBearerAuth,
-} from '@nestjs/swagger';
 import { FilterUserDTO } from './dto/filter-user.dto';
 
 @Controller('users')
@@ -16,15 +11,6 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth()
-  @ApiOkResponse({
-    isArray: true,
-    type: User,
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized',
-  })
   async getUsers(
     @GetUser() user: User,
     @Query() filter: FilterUserDTO,

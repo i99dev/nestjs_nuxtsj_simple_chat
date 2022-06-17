@@ -5,11 +5,11 @@
         <form class="space-y-6">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
-              Email address
+              username
             </label>
             <div class="mt-1">
               <input
-                v-model="email"
+                v-model="username"
                 id="email"
                 name="email"
                 type="email"
@@ -39,46 +39,6 @@
               />
             </div>
           </div>
-
-          <div>
-            <label
-              for="password"
-              class="block text-sm font-medium text-gray-700"
-            >
-              country
-            </label>
-            <div class="mt-1">
-              <input
-                v-model="country"
-                id="password"
-                name="password"
-                type="country"
-                autocomplete="current-password"
-                required=""
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              for="password"
-              class="block text-sm font-medium text-gray-700"
-            >
-              username
-            </label>
-            <div class="mt-1">
-              <input
-                v-model="username"
-                id="password"
-                name="password"
-                type="username"
-                autocomplete="current-password"
-                required=""
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
-
           <div class="flex items-center justify-between">
             <div class="flex items-center">
               <input
@@ -101,13 +61,15 @@
 
           <div>
             <button
-              @click.prevent="signup"
+              @click.prevent="signin"
               class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Sign in
             </button>
           </div>
-          {{ errors }}
+          <div>
+            {{ error }}
+          </div>
         </form>
       </div>
     </div>
@@ -125,16 +87,14 @@ export default Vue.extend({
       password: '123456',
       country: 'india',
       username: 'test',
-      errors: null,
+      error: null,
     }
   },
   methods: {
-    async signup() {
-     await this.$axios.$post('/auth/signup', {
-        email: this.email,
-        password: this.password,
-        country: this.country,
-        username: this.username,
+    async signin() {
+     await this.$axios.$post('/auth/signin', {
+      password: this.password,
+      username: this.username,
       }).then(async res => {
         console.log(res)
         //@ts-ignore
@@ -142,7 +102,7 @@ export default Vue.extend({
         localStorage.setItem('user', JSON.stringify(res.data))
         window.location.reload()
       }).catch(err => {
-        this.errors ="there is some error"
+        this.error = err.response.data.message
         console.log(err)
       })
       //redirect to home page
