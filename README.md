@@ -28,7 +28,7 @@ this very simple example of using socket.io with nestjs and nuxtjs
 I add this to my API to make it work with socket.io on frontend
 
 ### Frontend
-I use [nuxtjs](https://nuxtjs.org/) and [vuejs](https://vuejs.org/)
+I use [nuxtjs](https://nuxtjs.org/) and [vuejs](https://vuejs.org/) and [tailwindcss](https://tailwindcss.com/) for styling
 - `/chat` - chat page 🔒.
 - `/login` - login page 🔓.
 - `/register` - register page 🔓.
